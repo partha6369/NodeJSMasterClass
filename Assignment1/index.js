@@ -23,6 +23,9 @@ var server = http.createServer(function(req,res){
   // Get the query string as an object
   var queryStringObject = parsedUrl.query;
   console.log(JSON.stringify(queryStringObject))
+  // Find out if "From" exists in Query String.
+  // If so, then extract the query parameter as the name of the caller
+  // Else, leave the caller as blank
   caller = '';
   if (queryStringObject !== undefined) {
     if (queryStringObject.From !== undefined) {
@@ -90,6 +93,8 @@ var handlers = {};
 
 // Hello handler
 handlers.hello = function(data,callback){
+  // IF caller is not blank, then include caller in greeting
+  // Else, provide a greeting without caller
   if (caller !== undefined && caller !== '') {
     callback(200,{'message':'Hello ' + caller + ', from Partha Majumdar from Bangalore, India'});
   } else {
